@@ -151,11 +151,26 @@ describe('Discover', function() {
   it('has a prefix of 6011 and a length of 19', function() {
     detectNetwork('6011567891234567891').should.equal('Discover');
   });
+
+  it('has a prefix of 65 and a length of 16', function() {
+    detectNetwork('6511567891234567').should.equal('Discover');
+  });
+
+  it('has a prefix of 65 and a length of 19', function() {
+    detectNetwork('6511567891234567891').should.equal('Discover');
+  });
+
+  for (var prefix = 644; prefix <= 649; prefix++) {
+    (function(prefix) {
+      it('has a prefix of ' + prefix + ' and a length of 16', function() {
+        detectNetwork(prefix + '1234567891234').should.equal('Discover');
+      });
+      it('has a prefix of ' + prefix + ' and a length of 19', function() {
+        detectNetwork(prefix + '1234567891234567').should.equal('Discover');
+      });
+    })(prefix)}
 });
 
 describe('Maestro', function() {
   // Write full test coverage for the Maestro card
 });
-
-
-// for (var prefix = 644; prefix <= 649; prefix++) {  (function(prefix) {    it('has a prefix of ' + prefix + ' and a length of 16');    it('has a prefix of ' + prefix + ' and a length of 19');  })(prefix)}

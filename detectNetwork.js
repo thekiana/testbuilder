@@ -46,13 +46,14 @@ var detectMasterCard = function(cardNumber) {
 
 var detectDiscover = function(cardNumber) {
   var stringified = cardNumber.toString();
+  var firstThreeDigits = stringified.slice(0, 3);
 
   if ((stringified.slice(0, 4) === '6011') || (stringified.slice(0, 2) === '65')) {
     return true;
   }
 
   for (var prefix = 644; prefix <= 649; prefix++) {
-    if (stringified.slice(0, 3) === parseInt(prefix)) {
+    if (parseInt(firstThreeDigits) === prefix) {
       return true;
     }
   }
@@ -60,5 +61,10 @@ var detectDiscover = function(cardNumber) {
   return false;
 }
 
-// Discover always has a prefix of 6011, 644-649, or 65, and a length of 16 or 19.
+// var detectMaestro = function(cardNumber) {
+//   var stringified = cardNumber.toSrtring();
+
+//   if (stringified.length <= 12 && stringified.length >= 19) && (stringified.slice(0, 4) === '5018' || '5020' || '6304')
+// }
+
 // Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
