@@ -174,14 +174,14 @@ describe('Discover', function() {
 describe('Maestro', function() {
   var should = chai.should();
 
-  for (var add = 8; add <= 15; add++) {
-    (function(add) {
+  for (var length = 8; length <= 15; length++) {
+    (function(length) {
 
-      var addOne = '1';
-      var first = '5018' + addOne.repeat(add);
-      var second = '5020' + addOne.repeat(add);
-      var third = '5038' + addOne.repeat(add);
-      var fourth = '6304' + addOne.repeat(add);
+      var add = '1';
+      var first = '5018' + add.repeat(length);
+      var second = '5020' + add.repeat(length);
+      var third = '5038' + add.repeat(length);
+      var fourth = '6304' + add.repeat(length);
 
       it(`has a prefix of 5018 and a length of ${first.length}`, function() {
         detectNetwork(first).should.equal('Maestro');
@@ -198,28 +198,6 @@ describe('Maestro', function() {
       it(`has a prefix of 6304 and a length of ${fourth.length}`, function() {
         detectNetwork(fourth).should.equal('Maestro');
       });
-    })(add)
+    })(length)
   }
   });
-
-
-
-// describe('Maestro', function() {
-//   var should = chai.should();
-
-//   for (var length = 12; length <= 19; length++) {
-//     (function(length) {
-//       it(`has a prefix of 5018 and a length of ${length}`, function() {
-//         detectNetwork('5018' + length).should.equal('Maestro');
-//       });
-//       it(`has a prefix of 5020 and a length of ${length}`, function() {
-//         detectNetwork('5020' + length).should.equal('Maestro');
-//       });
-//       it(`has a prefix of 5038 and a length of ${length}`, function() {
-//         detectNetwork('5038' + length).should.equal('Maestro');
-//       });
-//       it(`has a prefix of 6304 and a length of ${length}`, function() {
-//         detectNetwork('6304' + length).should.equal('Maestro');
-//       });
-//     })(length)};
-// });
