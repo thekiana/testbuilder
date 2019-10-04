@@ -14,18 +14,20 @@ var detectNetwork = function(cardNumber) {
 
     var stringified = cardNumber.toString();
 
-    if ((stringified.slice(0, 2) === '38' || '39') && (cardNumber.length === 14)) {
+    if ((stringified.slice(0, 2) === '38' || stringified.slice(0, 2) === '39') && cardNumber.length === 14) {
       return `Diner's Club`;
-    } else if ((stringified.slice(0, 2) === '34' || '37') && (cardNumber.length === 15)) {
+    } else if ((stringified.slice(0, 2) === '34' || stringified.slice(0, 2) === '37') && cardNumber.length === 15) {
       return `American Express`;
     } else if ((stringified.charAt(0) === '4') && (cardNumber.length === 13 || 16 || 19)) {
       return `Visa`;
     } else if ((stringified.charAt(0) === '5') && (detectMasterCard(cardNumber)) && (cardNumber.length === 16)) {
       return `MasterCard`;
     } else if ((detectDiscover(cardNumber)) && (cardNumber.length === 16 || 19)) {
-      return 'Discover';
+      return `Discover`;
+    } else if ((detectMaestro(cardNumber)) && (stringified.slice(0, 4) === '5018' || '5020' || '5038' || '6304')) {
+      return `Maestro`;
     } else {
-      return 'Delete me!';
+      return `Delete me!`;
     }
 
   // Once you've read this, go ahead and try to implement this function, then return to the console.
@@ -59,12 +61,16 @@ var detectDiscover = function(cardNumber) {
   }
 
   return false;
-}
+};
 
-// var detectMaestro = function(cardNumber) {
-//   var stringified = cardNumber.toSrtring();
+var detectMaestro = function(cardNumber) {
+  var stringified = cardNumber.toString();
 
-//   if (stringified.length <= 12 && stringified.length >= 19) && (stringified.slice(0, 4) === '5018' || '5020' || '6304')
-// }
+  for (var length = 12; length <= 19; length++) {
+    if (parseInt(stringified.length) === length) {
+      return true;
+    }
+  }
 
-// Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
+  return false;
+};

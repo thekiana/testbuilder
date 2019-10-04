@@ -105,18 +105,18 @@ describe('MasterCard', function() {
   // Expect syntax is one way to do this, but there are others.
   // If you want to know more, check out the documentation.
   //   http://chaijs.com/api/bdd/
-  var expect = chai.expect;
+  var should = chai.should();
 
   it('has a prefix of 51 and a length of 16', function() {
-    expect(detectNetwork('5112345678901234')).to.equal('MasterCard');
+    detectNetwork('5112345678901234').should.equal('MasterCard');
   });
 
   it('has a prefix of 52 and a length of 16', function() {
-    expect(detectNetwork('5212345678901234')).to.equal('MasterCard');
+    detectNetwork('5212345678901234').should.equal('MasterCard');
   });
 
   it('has a prefix of 53 and a length of 16', function() {
-    expect(detectNetwork('5312345678901234')).to.equal('MasterCard');
+    detectNetwork('5312345678901234').should.equal('MasterCard');
   });
 
 
@@ -168,9 +168,58 @@ describe('Discover', function() {
       it('has a prefix of ' + prefix + ' and a length of 19', function() {
         detectNetwork(prefix + '1234567891234567').should.equal('Discover');
       });
-    })(prefix)}
+    })(prefix)};
 });
 
 describe('Maestro', function() {
-  // Write full test coverage for the Maestro card
-});
+  var should = chai.should();
+
+  for (var add = 8; add <= 15; add++) {
+    (function(add) {
+
+      var addOne = '1';
+      var first = '5018' + addOne.repeat(add);
+      var second = '5020' + addOne.repeat(add);
+      var third = '5038' + addOne.repeat(add);
+      var fourth = '6304' + addOne.repeat(add);
+
+      it(`has a prefix of 5018 and a length of ${first.length}`, function() {
+        detectNetwork(first).should.equal('Maestro');
+      });
+
+      it(`has a prefix of 5020 and a length of ${second.length}`, function() {
+        detectNetwork(second).should.equal('Maestro');
+      });
+
+      it(`has a prefix of 5038 and a length of ${third.length}`, function() {
+        detectNetwork(third).should.equal('Maestro');
+      });
+
+      it(`has a prefix of 6304 and a length of ${fourth.length}`, function() {
+        detectNetwork(fourth).should.equal('Maestro');
+      });
+    })(add)
+  }
+  });
+
+
+
+// describe('Maestro', function() {
+//   var should = chai.should();
+
+//   for (var length = 12; length <= 19; length++) {
+//     (function(length) {
+//       it(`has a prefix of 5018 and a length of ${length}`, function() {
+//         detectNetwork('5018' + length).should.equal('Maestro');
+//       });
+//       it(`has a prefix of 5020 and a length of ${length}`, function() {
+//         detectNetwork('5020' + length).should.equal('Maestro');
+//       });
+//       it(`has a prefix of 5038 and a length of ${length}`, function() {
+//         detectNetwork('5038' + length).should.equal('Maestro');
+//       });
+//       it(`has a prefix of 6304 and a length of ${length}`, function() {
+//         detectNetwork('6304' + length).should.equal('Maestro');
+//       });
+//     })(length)};
+// });
