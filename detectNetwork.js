@@ -18,14 +18,16 @@ var detectNetwork = function(cardNumber) {
       return `Diner's Club`;
     } else if ((stringified.slice(0, 2) === '34' || stringified.slice(0, 2) === '37') && cardNumber.length === 15) {
       return `American Express`;
-    } else if ((stringified.charAt(0) === '4') && (cardNumber.length === 13 || 16 || 19)) {
+    } else if ((stringified.charAt(0) === '4') && (cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19)) {
       return `Visa`;
     } else if ((stringified.charAt(0) === '5') && (detectMasterCard(cardNumber)) && (cardNumber.length === 16)) {
       return `MasterCard`;
-    } else if ((detectDiscover(cardNumber)) && (cardNumber.length === 16 || 19)) {
+    } else if ((detectDiscover(cardNumber)) && (cardNumber.length === 16 || cardNumber.length === 19)) {
       return `Discover`;
-    } else if ((detectMaestro(cardNumber)) && (stringified.slice(0, 4) === '5018' || '5020' || '5038' || '6304')) {
+    } else if ((detectMaestro(cardNumber)) && (stringified.slice(0, 4) === '5018' || stringified.slice(0, 4) === '5020' || stringified.slice(0, 4) === '5038' || stringified.slice(0, 4) === '6304')) {
       return `Maestro`;
+    } else if (detectChinaUnionPay(cardNumber)) {
+      return `China Union Pay`;
     } else {
       return `Delete me!`;
     }
@@ -74,3 +76,37 @@ var detectMaestro = function(cardNumber) {
 
   return false;
 };
+
+var detectChinaUnionPay = function(cardNumber) {
+  var stringified = cardNumber.toString();
+  var firstTwoDigits = cardNumber.slice(0, 2);
+
+  if ((firstTwoDigits === '62') && (cardNumber.length >= 12 && cardNumber.length <= 19)) {
+    var convertSix = cardNumber.slice(2, 6);
+    var convertThree = cardNumber.slice(2, 3);
+    var convertFour = cardNumber.slice(2, 4);
+
+    if (convertSix >= 2126 && convertSix <= 2925) {
+      return true;
+    } else if (convertThree >= 4 && convertThree <= 6) {
+      return true;
+    } else if (convertFour >= 82 && convertFour <= 88) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+// console.log(detectNetwork('6288123456789123'));
+
+//6288 and a length of 12
+
+
+// var detectSwitch = function(cardNumber) {
+
+// }
+
+// Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
+
+// Heads up! Switch and Visa seem to have some overlapping card numbers - in any apparent conflict, you should choose the network with the longer prefix.

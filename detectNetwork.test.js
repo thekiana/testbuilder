@@ -201,3 +201,46 @@ describe('Maestro', function() {
     })(length)
   }
   });
+
+  describe('China Union Pay', function() {
+    var should = chai.should();
+
+    for (var prefix = 622126; prefix <= 622925; prefix++) {
+      for (var length = 6; length <= 13; length++) {
+        (function(prefix, length) {
+          var add = '1';
+          var sixDigitPrefix = add.repeat(length);
+
+          it(`has a prefix of ${prefix} and a length of ${sixDigitPrefix.length}`, function() {
+            detectNetwork(prefix.toString() + sixDigitPrefix).should.equal('China Union Pay');
+          });
+        })(prefix, length)
+      }
+    }
+
+    for (var prefix = 624; prefix <= 626; prefix++) {
+      for (var length = 9; length <= 16; length++) {
+        (function(prefix, length) {
+          var add = '1';
+          var threeDigitPrefix = add.repeat(length);
+
+          it(`has a prefix of ${prefix} and a length of ${threeDigitPrefix.length}`, function() {
+            detectNetwork(prefix.toString() + threeDigitPrefix).should.equal('China Union Pay');
+          });
+        })(prefix, length)
+      }
+    }
+
+    for (var prefix = 6282; prefix <= 6288; prefix++) {
+      for (var length = 8; length <= 15; length++) {
+        (function(prefix, length) {
+          var add = '1';
+          var fourDigitPrefix = add.repeat(length);
+
+          it(`has a prefix of ${prefix} and a length of ${fourDigitPrefix.length}`, function() {
+            detectNetwork(prefix.toString() + fourDigitPrefix).should.equal('China Union Pay');
+          });
+        })(prefix, length)
+      }
+    }
+  });
